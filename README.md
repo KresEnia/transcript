@@ -1,1 +1,1 @@
-# First trial of RNAseq data analysis
+# First trial of genomic variant calling from DNA sequencing data
