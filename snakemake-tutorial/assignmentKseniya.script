@@ -1,1073 +1,0 @@
-Script started on 2023-04-12 17:40:42+03:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="168" LINES="44"]
-(base) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ conda activate snakemake-tutorial
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefile
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;79H(B[0;7m[ New File ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[m[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2drule bwa[?12l[?25h[?25l_map:[3d[?12l[?25h[?25l    inpu[?12l[?25h[?25lt:[42d[K[4;5H[?12l[?25h[?25l    "da[?12l[?25h[?25lta/genom[?12l[?25h[?25le.fa",[5d[?12l[?25h[?25l[5;9H[?12l[?25h[?25l"data/s[?12l[?25h[?25lamples/{[?12l[?25h[?25lsample}[?12l[?25h[?25l.fastq"[?12l[?25h[?25l[6;5Hou[?12l[?25h[?25ltput:[7d [?12l[?25h[?25l[9G"mapped_[?12l[?25h[?25lreads/{[?12l[?25h[?25lsample}.bam"[8d[?12l[?25h[?25l    shel[?12l[?25h[?25ll:[9;5H[?12l[?25h[?25l    "bw[?12l[?25h[?25la mem {[?12l[?25h[?25linput} | samto[?12l[?25h[?25lols view[?12l[?25h[?25l -Sb - [?12l[?25h[?25l> {out[?12l[?25h[?25lput}"[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 8 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ cat Snakefile
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --cores 1 mapped_reads/A.bam
-[33mBuilding DAG of jobs...[0m
-[33mUsing shell: /usr/bin/bash[0m
-[33mProvided cores: 1 (use --cores to define parallelism)[0m
-[33mRules claiming more threads will be scaled down.[0m
-[33mJob stats:
-job        count    min threads    max threads
--------  -------  -------------  -------------
-bwa_map        1              1              1
-total          1              1              1
-[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 17:42:11 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/A.fastq
-    output: mapped_reads/A.bam
-    jobid: 0
-    reason: Missing output files: mapped_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[M::bwa_idx_load_from_disk] read 0 ALT contigs
-[M::process] read 25000 sequences (2525000 bp)...
-[M::mem_process_seqs] Processed 25000 reads in 2.011 CPU sec, 2.007 real sec
-[main] Version: 0.7.17-r1188
-[main] CMD: bwa mem data/genome.fa data/samples/A.fastq
-[main] Real time: 2.303 sec; CPU: 2.088 sec
-[32m[Wed Apr 12 17:42:14 2023][0m
-[32mFinished job 0.[0m
-[32m1 of 1 steps (100%) done[0m
-[33mComplete log: .snakemake/log/2023-04-12T174211.427818.snakemake.log[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --cores 1 mapped_reads/A.bam[25Pcat Snakefile[1@nano[C[C[C[C[C[C[C[C[C[C
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;77H(B[0;7m[ Read 8 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mrule bwa_map:[3;5Hinput:[4d"data/genome.fa",[5;9H"data/samples/{sample}.fastq"[6;5Houtput:[7;9H"mapped_reads/{sample}.bam"[8;5Hshell:[9d"bwa mem {input} | samtools view -Sb - > {output}"[2d[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2d[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l_map:[K[?12l[?25h[?25lmap:[K[?12l[?25h[?25lap:[K[?12l[?25h[?25lp:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;41r[41;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;41r[41;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[42d[K[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.fa",[K[?12l[?25h[?25lfa",[K[?12l[?25h[?25la",[K[?12l[?25h[?25l",[K[?12l[?25h[?25l,[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lastq"[K[?12l[?25h[?25lstq"[K[?12l[?25h[?25ltq"[K[?12l[?25h[?25lq"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.bam"[K[?12l[?25h[?25lbam"[K[?12l[?25h[?25lam"[K[?12l[?25h[?25lm"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lhell:[K[?12l[?25h[?25lell:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lput}"[K[?12l[?25h[?25lut}"[K[?12l[?25h[?25lt}"[K[?12l[?25h[?25l}"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25lrule bwa[?12l[?25h[?25l_map:[3d[?12l[?25h[?25l    inpu[?12l[?25h[?25lt:[4;5H[?12l[?25h[?25l    "da[?12l[?25h[?25lta/genom[?12l[?25h[?25le.fa",[5d[?12l[?25h[?25l[5;9H[?12l[?25h[?25l"data/s[?12l[?25h[?25lamples/{[?12l[?25h[?25lsample}[?12l[?25h[?25l.fastq"[?12l[?25h[?25l[6;5Hou[?12l[?25h[?25ltput:[7;9H"[?12l[?25h[?25lmapped_reads/{[?12l[?25h[?25lsample}[?12l[?25h[?25l.bam"[8d[?12l[?25h[?25l    shel[?12l[?25h[?25ll:[9;5H[?12l[?25h[?25l    "bw[?12l[?25h[?25la mem {[?12l[?25h[?25linput} [?12l[?25h[?25l| samto[?12l[?25h[?25lols view[?12l[?25h[?25l -Sb - [?12l[?25h[?25l> {out[?12l[?25h[?25lput}"[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 8 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ cnano Snakefilesnakemake --cores 1 mapped_reads/A.bam[25Pcat Snakefile
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -np mapped_reads/B.bam
-[33mBuilding DAG of jobs...[0m
-[33mJob stats:
-job        count    min threads    max threads
--------  -------  -------------  -------------
-bwa_map        1              1              1
-total          1              1              1
-[0m
-[32m[0m
-[32m[Wed Apr 12 17:43:32 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/B.fastq
-    output: mapped_reads/B.bam
-    jobid: 0
-    reason: Missing output files: mapped_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[33mbwa mem data/genome.fa data/samples/B.fastq | samtools view -Sb - > mapped_reads/B.bam[0m
-[33mJob stats:
-job        count    min threads    max threads
--------  -------  -------------  -------------
-bwa_map        1              1              1
-total          1              1              1
-[0m
-[33mReasons:
-    (check individual jobs above for details)
-    missing output files:
-        bwa_map[0m
-[33m[0m
-[33mThis was a dry-run (flag -n). The order of jobs does not reflect the order of execution.[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -np mapped_reads/B.bam[19Pcat Snakefile[1@nano[C[C[C[C[C[C[C[C[C[Csnakemake --cores 1 mapped_reads/A.bam[1P.bamB.bam
-[33mBuilding DAG of jobs...[0m
-[33mUsing shell: /usr/bin/bash[0m
-[33mProvided cores: 1 (use --cores to define parallelism)[0m
-[33mRules claiming more threads will be scaled down.[0m
-[33mJob stats:
-job        count    min threads    max threads
--------  -------  -------------  -------------
-bwa_map        1              1              1
-total          1              1              1
-[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 17:44:28 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/B.fastq
-    output: mapped_reads/B.bam
-    jobid: 0
-    reason: Missing output files: mapped_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[M::bwa_idx_load_from_disk] read 0 ALT contigs
-[M::process] read 25000 sequences (2525000 bp)...
-[M::mem_process_seqs] Processed 25000 reads in 1.978 CPU sec, 1.986 real sec
-[main] Version: 0.7.17-r1188
-[main] CMD: bwa mem data/genome.fa data/samples/B.fastq
-[main] Real time: 2.305 sec; CPU: 2.074 sec
-[32m[Wed Apr 12 17:44:30 2023][0m
-[32mFinished job 0.[0m
-[32m1 of 1 steps (100%) done[0m
-[33mComplete log: .snakemake/log/2023-04-12T174427.855871.snakemake.log[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ touch data/samples/A.fastq
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -np mapped_reads/A.bam mapped_reads/B.bam
-[33mBuilding DAG of jobs...[0m
-[33mJob stats:
-job        count    min threads    max threads
--------  -------  -------------  -------------
-bwa_map        1              1              1
-total          1              1              1
-[0m
-[32m[0m
-[32m[Wed Apr 12 17:45:49 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/A.fastq
-    output: mapped_reads/A.bam
-    jobid: 1
-    reason: Updated input files: data/samples/A.fastq
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[33mbwa mem data/genome.fa data/samples/A.fastq | samtools view -Sb - > mapped_reads/A.bam[0m
-[33mJob stats:
-job        count    min threads    max threads
--------  -------  -------------  -------------
-bwa_map        1              1              1
-total          1              1              1
-[0m
-[33mReasons:
-    (check individual jobs above for details)
-    updated input files:
-        bwa_map[0m
-[33m[0m
-[33mThis was a dry-run (flag -n). The order of jobs does not reflect the order of execution.[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -np mapped_reads/A.bam mapped_reads/B.bam[25Ptouch data/samples/A.fastqsnakemake --cores 1 mapped_reads/B.bam[6Pnp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[19Pcat Snakefile[1@nano[C[C[C[C[C[C[C[C[C[C
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;77H(B[0;7m[ Read 8 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mrule bwa_map:[3;5Hinput:[4d"data/genome.fa",[5;9H"data/samples/{sample}.fastq"[6;5Houtput:[7;9H"mapped_reads/{sample}.bam"[8;5Hshell:[9d"bwa mem {input} | samtools view -Sb - > {output}"[2d[?12l[?25h[?25l[3d[?12l[?25h[?25l[4d[?12l[?25h[?25l[5d[?12l[?25h[?25l[6d[?12l[?25h[?25l[7d[?12l[?25h[?25l[8d[?12l[?25h[?25l[9d[?12l[?25h[?25l[10d[?12l[?25h[?25l[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[11d[?12l[?25h[?25lrule sam[?12l[?25h[?25ltools_s[?12l[?25h[?25lort:[42d[K[12d  [?12l[?25h[?25l  input:[?12l[?25h[?25l[13;7H[?12l[?25h[?25l  "mapped_read[?12l[?25h[?25ls/{samp[?12l[?25h[?25lle}.bam[?12l[?25h[?25l"[14;5Houtput:[15d[?12l[?25h[?25l[15;9H[?12l[?25h[?25l"sorted_reads/[?12l[?25h[?25l{sample[?12l[?25h[?25l}.bam"[16;5Hshe[?12l[?25h[?25lll:[17;4H[?12l[?25h[?25l[9G"s[?12l[?25h[?25lamtools [?12l[?25h[?25lsort -T[?12l[?25h[?25l sorted_[?12l[?25h[?25lreads/{[?12l[?25h[?25lwildcar[?12l[?25h[?25lds.sampl[?12l[?25h[?25le} "[18;9H"[?12l[?25h[?25l-O bam[?12l[?25h[?25l {input[?12l[?25h[?25l} > {[?12l[?25h[?25loutput}"[?12l[?25h[?25lx[?12l[?25h[?25l [?12l[?25h[?25lx[?12l[?25h[?25l [?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 17 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefilesnakemake -np mapped_reads/A.bam mapped_reads/B.bam[25Ptouch data/samples/A.fastqsnakemake --cores 1 mapped_reads/B.bam[6Pnp[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[19Pcat Snakefile
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-
-rule samtools_sort:
-    input:
-        "mapped_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam"
-    shell:
-        "samtools sort -T sorted_reads/{wildcards.sample} "
-        "-O bam {input} > {output}"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nakemake -np sorted_reads/B.bam
-
-Command 'nakemake' not found, did you mean:
-
-  command 'snakemake' from deb snakemake (5.10.0-2)
-
-Try: sudo apt install <deb name>
-
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nakemake -np sorted_reads/B.bam[1@s
-[33mBuilding DAG of jobs...[0m
-[33mJob stats:
-job              count    min threads    max threads
--------------  -------  -------------  -------------
-samtools_sort        1              1              1
-total                1              1              1
-[0m
-[32m[0m
-[32m[Wed Apr 12 17:47:49 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/B.bam
-    output: sorted_reads/B.bam
-    jobid: 0
-    reason: Missing output files: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[33msamtools sort -T sorted_reads/B -O bam mapped_reads/B.bam > sorted_reads/B.bam[0m
-[33mJob stats:
-job              count    min threads    max threads
--------------  -------  -------------  -------------
-samtools_sort        1              1              1
-total                1              1              1
-[0m
-[33mReasons:
-    (check individual jobs above for details)
-    missing output files:
-        samtools_sort[0m
-[33m[0m
-[33mThis was a dry-run (flag -n). The order of jobs does not reflect the order of execution.[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -np sorted_reads/B.bam[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[18Pcat Snakefile[1@nano[C[C[C[C[C[C[C[C[C[C
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 17 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mrule bwa_map:[3;5Hinput:[4d"data/genome.fa",[5;9H"data/samples/{sample}.fastq"[6;5Houtput:[7;9H"mapped_reads/{sample}.bam"[8;5Hshell:[9d"bwa mem {input} | samtools view -Sb - > {output}"[11drule samtools_sort:[12;5Hinput:[13d"mapped_reads/{sample}.bam"[14;5Houtput:[15;9H"sorted_reads/{sample}.bam"[16;5Hshell:[17d"samtools sort -T sorted_reads/{wildcards.sample} "[18;9H"-O bam {input} > {output}"[2d[?12l[?25h[?25l[3d[?12l[?25h[?25l[4d[?12l[?25h[?25l[5d[?12l[?25h[?25l[6d[?12l[?25h[?25l[7d[?12l[?25h[?25l[8d[?12l[?25h[?25l[9d[?12l[?25h[?25l[10d[?12l[?25h[?25l[11d[?12l[?25h[?25l[12d[?12l[?25h[?25l[13d[?12l[?25h[?25l[14d[?12l[?25h[?25l[15d[?12l[?25h[?25l[16d[?12l[?25h[?25l[17d[?12l[?25h[?25l[18d[?12l[?25h[?25l[19d[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[42d[K[19d[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[20d[?12l[?25h[?25lrule samtools_i[?12l[?25h[?25lndex:[21;5Hinput[?12l[?25h[?25l:[22;6H[?12l[?25h[?25l   "sor[?12l[?25h[?25lted_rea[?12l[?25h[?25lds/{sam[?12l[?25h[?25lple}.ba[?12l[?25h[?25lm"[23;5H[?12l[?25h[?25loutput:[?12l[?25h[?25l[24;8H[?12l[?25h[?25l "sorte[?12l[?25h[?25ld_reads[?12l[?25h[?25l/{sample}.bam.[?12l[?25h[?25lbai"[25;5Hshell:[?12l[?25h[?25l[26;7H[?12l[?25h[?25l  "samt[?12l[?25h[?25lools ind[?12l[?25h[?25lex {input}"[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 25 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefilesnakemake -np sorted_reads/B.bam[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[18Pcat Snakefile
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-
-rule samtools_sort:
-    input:
-        "mapped_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam"
-    shell:
-        "samtools sort -T sorted_reads/{wildcards.sample} "
-        "-O bam {input} > {output}"
-
-rule samtools_index:
-    input:
-        "sorted_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam.bai"
-    shell:
-        "samtools index {input}"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --dag sorted_reads/{A,B}.bam.bai | dot -Tsvg > dag.svg
-[33mBuilding DAG of jobs...[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nakemake -T rule2s[K[1@s[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
-usage: snakemake [-h] [--dry-run] [--profile PROFILE] [--cache [RULE ...]] [--snakefile FILE] [--cores [N]] [--jobs [N]] [--local-cores N]
-                 [--resources [NAME=INT ...]] [--set-threads RULE=THREADS [RULE=THREADS ...]] [--max-threads MAX_THREADS]
-                 [--set-resources RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]] [--set-scatter NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]]
-                 [--set-resource-scopes RESOURCE=[global|local] [RESOURCE=[global|local] ...]] [--default-resources [NAME=INT ...]]
-                 [--preemption-default PREEMPTION_DEFAULT] [--preemptible-rules PREEMPTIBLE_RULES [PREEMPTIBLE_RULES ...]] [--config [KEY=VALUE ...]]
-                 [--configfile FILE [FILE ...]] [--envvars VARNAME [VARNAME ...]] [--directory DIR] [--touch] [--keep-going]
-                 [--rerun-triggers {mtime,params,input,software-env,code} [{mtime,params,input,software-env,code} ...]] [--force] [--forceall]
-                 [--forcerun [TARGET ...]] [--prioritize TARGET [TARGET ...]] [--batch RULE=BATCH/BATCHES] [--until TARGET [TARGET ...]]
-                 [--omit-from TARGET [TARGET ...]] [--rerun-incomplete] [--shadow-prefix DIR] [--scheduler [{ilp,greedy}]] [--wms-monitor [WMS_MONITOR]]
-                 [--wms-monitor-arg [NAME=VALUE ...]] [--scheduler-ilp-solver {COIN_CMD}] [--scheduler-solver-path SCHEDULER_SOLVER_PATH]
-                 [--conda-base-path CONDA_BASE_PATH] [--no-subworkflows] [--groups GROUPS [GROUPS ...]] [--group-components GROUP_COMPONENTS [GROUP_COMPONENTS ...]]
-                 [--report [FILE]] [--report-stylesheet CSSFILE] [--draft-notebook TARGET] [--edit-notebook TARGET] [--notebook-listen IP:PORT] [--lint [{text,json}]]
-                 [--generate-unit-tests [TESTPATH]] [--containerize] [--export-cwl FILE] [--list] [--list-target-rules] [--dag] [--rulegraph] [--filegraph] [--d3dag]
-                 [--summary] [--detailed-summary] [--archive FILE] [--cleanup-metadata FILE [FILE ...]] [--cleanup-shadow] [--skip-script-cleanup] [--unlock]
-                 [--list-version-changes] [--list-code-changes] [--list-input-changes] [--list-params-changes] [--list-untracked] [--delete-all-output]
-                 [--delete-temp-output] [--bash-completion] [--keep-incomplete] [--drop-metadata] [--version] [--reason] [--gui [PORT]] [--printshellcmds]
-                 [--debug-dag] [--stats FILE] [--nocolor] [--quiet [{progress,rules,all} ...]] [--print-compilation] [--verbose] [--force-use-threads]
-                 [--allow-ambiguity] [--nolock] [--ignore-incomplete] [--max-inventory-time SECONDS] [--latency-wait SECONDS] [--wait-for-files [FILE ...]]
-                 [--wait-for-files-file FILE] [--notemp] [--all-temp] [--keep-remote] [--keep-target-files] [--allowed-rules ALLOWED_RULES [ALLOWED_RULES ...]]
-                 [--target-jobs TARGET_JOBS [TARGET_JOBS ...]] [--local-groupid LOCAL_GROUPID] [--max-jobs-per-second MAX_JOBS_PER_SECOND]
-                 [--max-status-checks-per-second MAX_STATUS_CHECKS_PER_SECOND] [-T RETRIES] [--attempt ATTEMPT] [--wrapper-prefix WRAPPER_PREFIX]
-                 [--default-remote-provider {S3,GS,FTP,SFTP,S3Mocked,gfal,gridftp,iRODS,AzBlob,XRootD}] [--default-remote-prefix DEFAULT_REMOTE_PREFIX]
-                 [--no-shared-fs] [--greediness GREEDINESS] [--no-hooks] [--overwrite-shellcmd OVERWRITE_SHELLCMD] [--debug] [--runtime-profile FILE] [--mode {0,1,2}]
-                 [--show-failed-logs] [--log-handler-script FILE] [--log-service {none,slack,wms}] [--slurm] [--cluster CMD | --cluster-sync CMD | --drmaa [ARGS]]
-                 [--cluster-config FILE] [--immediate-submit] [--jobscript SCRIPT] [--jobname NAME] [--cluster-status CLUSTER_STATUS]
-                 [--cluster-cancel CLUSTER_CANCEL] [--cluster-cancel-nargs CLUSTER_CANCEL_NARGS] [--cluster-sidecar CLUSTER_SIDECAR] [--drmaa-log-dir DIR]
-                 [--kubernetes [NAMESPACE]] [--container-image IMAGE] [--k8s-cpu-scalar FLOAT] [--tibanna] [--tibanna-sfn TIBANNA_SFN] [--precommand PRECOMMAND]
-                 [--tibanna-config TIBANNA_CONFIG [TIBANNA_CONFIG ...]] [--google-lifesciences]
-                 [--google-lifesciences-regions GOOGLE_LIFESCIENCES_REGIONS [GOOGLE_LIFESCIENCES_REGIONS ...]]
-                 [--google-lifesciences-location GOOGLE_LIFESCIENCES_LOCATION] [--google-lifesciences-keep-cache] [--flux] [--tes URL] [--use-conda]
-                 [--conda-not-block-search-path-envvars] [--list-conda-envs] [--conda-prefix DIR] [--conda-cleanup-envs] [--conda-cleanup-pkgs [{tarballs,cache}]]
-                 [--conda-create-envs-only] [--conda-frontend {conda,mamba}] [--use-singularity] [--singularity-prefix DIR] [--singularity-args ARGS]
-                 [--cleanup-containers] [--use-envmodules]
-                 [target ...]
-snakemake: error: argument -T/--retries/--restart-times: invalid int value: 'rule2'
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -T rule2[K ssamtools_index[C[1Pamtools_index[C[C[C[C[C[C[C[C[C[C[C[C[C[C
-usage: snakemake [-h] [--dry-run] [--profile PROFILE] [--cache [RULE ...]] [--snakefile FILE] [--cores [N]] [--jobs [N]] [--local-cores N]
-                 [--resources [NAME=INT ...]] [--set-threads RULE=THREADS [RULE=THREADS ...]] [--max-threads MAX_THREADS]
-                 [--set-resources RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]] [--set-scatter NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]]
-                 [--set-resource-scopes RESOURCE=[global|local] [RESOURCE=[global|local] ...]] [--default-resources [NAME=INT ...]]
-                 [--preemption-default PREEMPTION_DEFAULT] [--preemptible-rules PREEMPTIBLE_RULES [PREEMPTIBLE_RULES ...]] [--config [KEY=VALUE ...]]
-                 [--configfile FILE [FILE ...]] [--envvars VARNAME [VARNAME ...]] [--directory DIR] [--touch] [--keep-going]
-                 [--rerun-triggers {mtime,params,input,software-env,code} [{mtime,params,input,software-env,code} ...]] [--force] [--forceall]
-                 [--forcerun [TARGET ...]] [--prioritize TARGET [TARGET ...]] [--batch RULE=BATCH/BATCHES] [--until TARGET [TARGET ...]]
-                 [--omit-from TARGET [TARGET ...]] [--rerun-incomplete] [--shadow-prefix DIR] [--scheduler [{ilp,greedy}]] [--wms-monitor [WMS_MONITOR]]
-                 [--wms-monitor-arg [NAME=VALUE ...]] [--scheduler-ilp-solver {COIN_CMD}] [--scheduler-solver-path SCHEDULER_SOLVER_PATH]
-                 [--conda-base-path CONDA_BASE_PATH] [--no-subworkflows] [--groups GROUPS [GROUPS ...]] [--group-components GROUP_COMPONENTS [GROUP_COMPONENTS ...]]
-                 [--report [FILE]] [--report-stylesheet CSSFILE] [--draft-notebook TARGET] [--edit-notebook TARGET] [--notebook-listen IP:PORT] [--lint [{text,json}]]
-                 [--generate-unit-tests [TESTPATH]] [--containerize] [--export-cwl FILE] [--list] [--list-target-rules] [--dag] [--rulegraph] [--filegraph] [--d3dag]
-                 [--summary] [--detailed-summary] [--archive FILE] [--cleanup-metadata FILE [FILE ...]] [--cleanup-shadow] [--skip-script-cleanup] [--unlock]
-                 [--list-version-changes] [--list-code-changes] [--list-input-changes] [--list-params-changes] [--list-untracked] [--delete-all-output]
-                 [--delete-temp-output] [--bash-completion] [--keep-incomplete] [--drop-metadata] [--version] [--reason] [--gui [PORT]] [--printshellcmds]
-                 [--debug-dag] [--stats FILE] [--nocolor] [--quiet [{progress,rules,all} ...]] [--print-compilation] [--verbose] [--force-use-threads]
-                 [--allow-ambiguity] [--nolock] [--ignore-incomplete] [--max-inventory-time SECONDS] [--latency-wait SECONDS] [--wait-for-files [FILE ...]]
-                 [--wait-for-files-file FILE] [--notemp] [--all-temp] [--keep-remote] [--keep-target-files] [--allowed-rules ALLOWED_RULES [ALLOWED_RULES ...]]
-                 [--target-jobs TARGET_JOBS [TARGET_JOBS ...]] [--local-groupid LOCAL_GROUPID] [--max-jobs-per-second MAX_JOBS_PER_SECOND]
-                 [--max-status-checks-per-second MAX_STATUS_CHECKS_PER_SECOND] [-T RETRIES] [--attempt ATTEMPT] [--wrapper-prefix WRAPPER_PREFIX]
-                 [--default-remote-provider {S3,GS,FTP,SFTP,S3Mocked,gfal,gridftp,iRODS,AzBlob,XRootD}] [--default-remote-prefix DEFAULT_REMOTE_PREFIX]
-                 [--no-shared-fs] [--greediness GREEDINESS] [--no-hooks] [--overwrite-shellcmd OVERWRITE_SHELLCMD] [--debug] [--runtime-profile FILE] [--mode {0,1,2}]
-                 [--show-failed-logs] [--log-handler-script FILE] [--log-service {none,slack,wms}] [--slurm] [--cluster CMD | --cluster-sync CMD | --drmaa [ARGS]]
-                 [--cluster-config FILE] [--immediate-submit] [--jobscript SCRIPT] [--jobname NAME] [--cluster-status CLUSTER_STATUS]
-                 [--cluster-cancel CLUSTER_CANCEL] [--cluster-cancel-nargs CLUSTER_CANCEL_NARGS] [--cluster-sidecar CLUSTER_SIDECAR] [--drmaa-log-dir DIR]
-                 [--kubernetes [NAMESPACE]] [--container-image IMAGE] [--k8s-cpu-scalar FLOAT] [--tibanna] [--tibanna-sfn TIBANNA_SFN] [--precommand PRECOMMAND]
-                 [--tibanna-config TIBANNA_CONFIG [TIBANNA_CONFIG ...]] [--google-lifesciences]
-                 [--google-lifesciences-regions GOOGLE_LIFESCIENCES_REGIONS [GOOGLE_LIFESCIENCES_REGIONS ...]]
-                 [--google-lifesciences-location GOOGLE_LIFESCIENCES_LOCATION] [--google-lifesciences-keep-cache] [--flux] [--tes URL] [--use-conda]
-                 [--conda-not-block-search-path-envvars] [--list-conda-envs] [--conda-prefix DIR] [--conda-cleanup-envs] [--conda-cleanup-pkgs [{tarballs,cache}]]
-                 [--conda-create-envs-only] [--conda-frontend {conda,mamba}] [--use-singularity] [--singularity-prefix DIR] [--singularity-args ARGS]
-                 [--cleanup-containers] [--use-envmodules]
-                 [target ...]
-snakemake: error: argument -T/--retries/--restart-times: invalid int value: 'rule'
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -T rule samtools_index[1P samtools_index[1P samtools_index[1P samtools_index[1P samtools_index[1Psamtools_index
-usage: snakemake [-h] [--dry-run] [--profile PROFILE] [--cache [RULE ...]] [--snakefile FILE] [--cores [N]] [--jobs [N]] [--local-cores N]
-                 [--resources [NAME=INT ...]] [--set-threads RULE=THREADS [RULE=THREADS ...]] [--max-threads MAX_THREADS]
-                 [--set-resources RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]] [--set-scatter NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]]
-                 [--set-resource-scopes RESOURCE=[global|local] [RESOURCE=[global|local] ...]] [--default-resources [NAME=INT ...]]
-                 [--preemption-default PREEMPTION_DEFAULT] [--preemptible-rules PREEMPTIBLE_RULES [PREEMPTIBLE_RULES ...]] [--config [KEY=VALUE ...]]
-                 [--configfile FILE [FILE ...]] [--envvars VARNAME [VARNAME ...]] [--directory DIR] [--touch] [--keep-going]
-                 [--rerun-triggers {mtime,params,input,software-env,code} [{mtime,params,input,software-env,code} ...]] [--force] [--forceall]
-                 [--forcerun [TARGET ...]] [--prioritize TARGET [TARGET ...]] [--batch RULE=BATCH/BATCHES] [--until TARGET [TARGET ...]]
-                 [--omit-from TARGET [TARGET ...]] [--rerun-incomplete] [--shadow-prefix DIR] [--scheduler [{ilp,greedy}]] [--wms-monitor [WMS_MONITOR]]
-                 [--wms-monitor-arg [NAME=VALUE ...]] [--scheduler-ilp-solver {COIN_CMD}] [--scheduler-solver-path SCHEDULER_SOLVER_PATH]
-                 [--conda-base-path CONDA_BASE_PATH] [--no-subworkflows] [--groups GROUPS [GROUPS ...]] [--group-components GROUP_COMPONENTS [GROUP_COMPONENTS ...]]
-                 [--report [FILE]] [--report-stylesheet CSSFILE] [--draft-notebook TARGET] [--edit-notebook TARGET] [--notebook-listen IP:PORT] [--lint [{text,json}]]
-                 [--generate-unit-tests [TESTPATH]] [--containerize] [--export-cwl FILE] [--list] [--list-target-rules] [--dag] [--rulegraph] [--filegraph] [--d3dag]
-                 [--summary] [--detailed-summary] [--archive FILE] [--cleanup-metadata FILE [FILE ...]] [--cleanup-shadow] [--skip-script-cleanup] [--unlock]
-                 [--list-version-changes] [--list-code-changes] [--list-input-changes] [--list-params-changes] [--list-untracked] [--delete-all-output]
-                 [--delete-temp-output] [--bash-completion] [--keep-incomplete] [--drop-metadata] [--version] [--reason] [--gui [PORT]] [--printshellcmds]
-                 [--debug-dag] [--stats FILE] [--nocolor] [--quiet [{progress,rules,all} ...]] [--print-compilation] [--verbose] [--force-use-threads]
-                 [--allow-ambiguity] [--nolock] [--ignore-incomplete] [--max-inventory-time SECONDS] [--latency-wait SECONDS] [--wait-for-files [FILE ...]]
-                 [--wait-for-files-file FILE] [--notemp] [--all-temp] [--keep-remote] [--keep-target-files] [--allowed-rules ALLOWED_RULES [ALLOWED_RULES ...]]
-                 [--target-jobs TARGET_JOBS [TARGET_JOBS ...]] [--local-groupid LOCAL_GROUPID] [--max-jobs-per-second MAX_JOBS_PER_SECOND]
-                 [--max-status-checks-per-second MAX_STATUS_CHECKS_PER_SECOND] [-T RETRIES] [--attempt ATTEMPT] [--wrapper-prefix WRAPPER_PREFIX]
-                 [--default-remote-provider {S3,GS,FTP,SFTP,S3Mocked,gfal,gridftp,iRODS,AzBlob,XRootD}] [--default-remote-prefix DEFAULT_REMOTE_PREFIX]
-                 [--no-shared-fs] [--greediness GREEDINESS] [--no-hooks] [--overwrite-shellcmd OVERWRITE_SHELLCMD] [--debug] [--runtime-profile FILE] [--mode {0,1,2}]
-                 [--show-failed-logs] [--log-handler-script FILE] [--log-service {none,slack,wms}] [--slurm] [--cluster CMD | --cluster-sync CMD | --drmaa [ARGS]]
-                 [--cluster-config FILE] [--immediate-submit] [--jobscript SCRIPT] [--jobname NAME] [--cluster-status CLUSTER_STATUS]
-                 [--cluster-cancel CLUSTER_CANCEL] [--cluster-cancel-nargs CLUSTER_CANCEL_NARGS] [--cluster-sidecar CLUSTER_SIDECAR] [--drmaa-log-dir DIR]
-                 [--kubernetes [NAMESPACE]] [--container-image IMAGE] [--k8s-cpu-scalar FLOAT] [--tibanna] [--tibanna-sfn TIBANNA_SFN] [--precommand PRECOMMAND]
-                 [--tibanna-config TIBANNA_CONFIG [TIBANNA_CONFIG ...]] [--google-lifesciences]
-                 [--google-lifesciences-regions GOOGLE_LIFESCIENCES_REGIONS [GOOGLE_LIFESCIENCES_REGIONS ...]]
-                 [--google-lifesciences-location GOOGLE_LIFESCIENCES_LOCATION] [--google-lifesciences-keep-cache] [--flux] [--tes URL] [--use-conda]
-                 [--conda-not-block-search-path-envvars] [--list-conda-envs] [--conda-prefix DIR] [--conda-cleanup-envs] [--conda-cleanup-pkgs [{tarballs,cache}]]
-                 [--conda-create-envs-only] [--conda-frontend {conda,mamba}] [--use-singularity] [--singularity-prefix DIR] [--singularity-args ARGS]
-                 [--cleanup-containers] [--use-envmodules]
-                 [target ...]
-snakemake: error: argument -T/--retries/--restart-times: invalid int value: 'samtools_index'
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nani Snakefile1
-
-Command 'nani' not found, did you mean:
-
-  command 'nabi' from deb nabi (1.0.0-4)
-  command 'nant' from deb nant (0.92~rc1+dfsg-7)
-  command 'nano' from deb nano (4.8-1ubuntu1)
-
-Try: sudo apt install <deb name>
-
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nani Snakefile1[1P Snakefile10 Snakefile1[1P Snakefile1o Snakefile1
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;79H(B[0;7m[ New File ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile1                                                                             [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[m[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2dSAMPLES =[?12l[?25h[?25l ["A"[?12l[?25h[?25l, "B"[?12l[?25h[?25l][?12l[?25h[?25l[3d[?12l[?25h[?25lrule bcf[42d[K[3;9H[?12l[?25h[?25ltools_c[?12l[?25h[?25lall:[4;3H[?12l[?25h[?25l  input:[?12l[?25h[?25l[5;7H[?12l[?25h[?25l  fa="d[?12l[?25h[?25lata/geno[?12l[?25h[?25lme.fa",[?12l[?25h[?25l[6;8H[?12l[?25h[?25l bam=exp[?12l[?25h[?25land("s[?12l[?25h[?25lorted_r[?12l[?25h[?25leads/{s[?12l[?25h[?25lample}.[?12l[?25h[?25lbam", s[?12l[?25h[?25lample=S[?12l[?25h[?25lAMPL[?12l[?25h[?25lES),[7d[?12l[?25h[?25l[7;9H[?12l[?25h[?25lbai=expa[?12l[?25h[?25lnd("so[?12l[?25h[?25lrted_re[?12l[?25h[?25lads/{sa[?12l[?25h[?25lmple}.bam.bai"[?12l[?25h[?25l, sample[?12l[?25h[?25l=SAMP[?12l[?25h[?25lLES)[?12l[?25h[?25l[8;5Hou[?12l[?25h[?25ltput:[9;9H"[?12l[?25h[?25lcalls/a[?12l[?25h[?25lll.vcf"[10;5Hshe[?12l[?25h[?25lll:[11;4H[?12l[?25h[?25l[9G"b[?12l[?25h[?25lcftools [?12l[?25h[?25lmpileup [?12l[?25h[?25l-f {inp[?12l[?25h[?25lut.fa} [?12l[?25h[?25l{input.[?12l[?25h[?25lbam} |[?12l[?25h[?25l "[12;5H[?12l[?25h[?25l    "bc[?12l[?25h[?25lftools c[?12l[?25h[?25lall -mv [?12l[?25h[?25l- > {o[?12l[?25h[?25lutput}"[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile1(B[m[42;31H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 11 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefile1[Knano Snakefile1i[C[C[C[C[C[C[C[C[C[C[Csnakemake -T samtools_indexrule samtools_index2[K-dag sorted_reads/{A,B}.bam.bai | dot -Tsvg > dag.svgcat Snakefile[K[1@nano[C[C[C[C[C[C[C[C[C[C
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 25 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mrule bwa_map:[3;5Hinput:[4d"data/genome.fa",[5;9H"data/samples/{sample}.fastq"[6;5Houtput:[7;9H"mapped_reads/{sample}.bam"[8;5Hshell:[9d"bwa mem {input} | samtools view -Sb - > {output}"[11drule samtools_sort:[12;5Hinput:[13d"mapped_reads/{sample}.bam"[14;5Houtput:[15;9H"sorted_reads/{sample}.bam"[16;5Hshell:[17d"samtools sort -T sorted_reads/{wildcards.sample} "[18;9H"-O bam {input} > {output}"[20drule samtools_index:[21;5Hinput:[22d"sorted_reads/{sample}.bam"[23;5Houtput:[24;9H"sorted_reads/{sample}.bam.bai"[25;5Hshell:[26d"samtools index {input}"[2d[?12l[?25h[?25l[3d[?12l[?25h[?25l[4d[?12l[?25h[?25l[5d[?12l[?25h[?25l[6d[?12l[?25h[?25l[7d[?12l[?25h[?25l[8d[?12l[?25h[?25l[9d[?12l[?25h[?25l[10d[?12l[?25h[?25l[11d[?12l[?25h[?25l[12d[?12l[?25h[?25l[13d[?12l[?25h[?25l[14d[?12l[?25h[?25l[15d[?12l[?25h[?25l[16d[?12l[?25h[?25l[17d[?12l[?25h[?25l[18d[?12l[?25h[?25l[19d[?12l[?25h[?25l[20d[?12l[?25h[?25l[21d[?12l[?25h[?25l[22d[?12l[?25h[?25l[23d[?12l[?25h[?25l[24d[?12l[?25h[?25l[25d[?12l[?25h[?25l[26d[?12l[?25h[?25l[27d[?12l[?25h[?25l[42d[K[27d[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[28d[?12l[?25h[?25lrule bcf[?12l[?25h[?25ltools_c[?12l[?25h[?25lall:[29;3H[?12l[?25h[?25l  input:[?12l[?25h[?25l[30;7H[?12l[?25h[?25l  fa="d[?12l[?25h[?25lata/geno[?12l[?25h[?25lme.fa",[?12l[?25h[?25l[31;8H[?12l[?25h[?25l bam=exp[?12l[?25h[?25land("sorted_r[?12l[?25h[?25leads/{s[?12l[?25h[?25lample}.[?12l[?25h[?25lbam", s[?12l[?25h[?25lample=SAMPL[?12l[?25h[?25lES),[32d[?12l[?25h[?25l[32;9H[?12l[?25h[?25lbai=expa[?12l[?25h[?25lnd("so[?12l[?25h[?25lrted_re[?12l[?25h[?25lads/{sa[?12l[?25h[?25lmple}.b[?12l[?25h[?25lam.bai"[?12l[?25h[?25l, sample[?12l[?25h[?25l=SAMP[?12l[?25h[?25lLES)[33;5Hou[?12l[?25h[?25ltput:[34d [?12l[?25h[?25l[9G"[?12l[?25h[?25lcalls/a[?12l[?25h[?25lll.vcf"[?12l[?25h[?25l[35;5Hshe[?12l[?25h[?25lll:[36;4H[?12l[?25h[?25l[9G"bcftools [?12l[?25h[?25lmpileup [?12l[?25h[?25l-f {input.fa} [?12l[?25h[?25l{input.[?12l[?25h[?25lbam} |[?12l[?25h[?25l "[37;5H[?12l[?25h[?25l    "bc[?12l[?25h[?25lftools c[?12l[?25h[?25lall -mv [?12l[?25h[?25l- > {output}"[?12l[?25h[?25l[A[?12l[?25h[?25l[35;11H[?12l[?25h[?25l[34;24H[?12l[?25h[?25l[33;12H[?12l[?25h[?25l[32;41H[?12l[?25h[?25l[A[?12l[?25h[?25l[30;29H[?12l[?25h[?25l[29;11H[?12l[?25h[?25l[28;20H[?12l[?25h[?25l[A[?12l[?25h[?25l[26;33H[?12l[?25h[?25l7[27;42r8[27dM[1;44r[27;1H[?12l[?25h[?25l7[27;42r8M[1;44r[28;1H[?12l[?25h[?25lSAMP[?12l[?25h[?25lLES =[?12l[?25h[?25l ["A"[?12l[?25h[?25l, "B"[?12l[?25h[?25l][?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 38 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --dag sorted_reads/{A,B}.bam.bai | dot -Tsvg > dag.svg
-[33mBuilding DAG of jobs...[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ --dag calls/all.vcf | dot -Tsvg > dag.svg
---dag: command not found
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ --dag calls/all.vcf | dot -Tsvg > dag.svg[1@s[1@n[1@a[1@k[1@e[1@m[1@a[1@k[1@e[1@ 
-[33mBuilding DAG of jobs...[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --dag calls/all.vcf | dot -Tsvg > dag.svg[10P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[23@snakemake --dag sorted_reads/{A,B}.bam.bai[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cnano Snakefile[K
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 38 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mrule bwa_map:[3;5Hinput:[4d"data/genome.fa",[5;9H"data/samples/{sample}.fastq"[6;5Houtput:[7;9H"mapped_reads/{sample}.bam"[8;5Hshell:[9d"bwa mem {input} | samtools view -Sb - > {output}"[11drule samtools_sort:[12;5Hinput:[13d"mapped_reads/{sample}.bam"[14;5Houtput:[15;9H"sorted_reads/{sample}.bam"[16;5Hshell:[17d"samtools sort -T sorted_reads/{wildcards.sample} "[18;9H"-O bam {input} > {output}"[20drule samtools_index:[21;5Hinput:[22d"sorted_reads/{sample}.bam"[23;5Houtput:[24;9H"sorted_reads/{sample}.bam.bai"[25;5Hshell:[26d"samtools index {input}"[28dSAMPLES = ["A", "B"][30drule bcftools_call:[31;5Hinput:[32dfa="data/genome.fa",[33;9Hbam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),[34;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES)[35;5Houtput:[36;9H"calls/all.vcf"[37;5Hshell:[38d"bcftools mpileup -f {input.fa} {input.bam} | "[39;9H"bcftools call -mv - > {output}"[2d[?12l[?25h[?25l[3d[?12l[?25h[?25l[4d[?12l[?25h[?25l[5d[?12l[?25h[?25l[6d[?12l[?25h[?25l[7d[?12l[?25h[?25l[8d[?12l[?25h[?25l[9d[?12l[?25h[?25l[10d[?12l[?25h[?25l[11d[?12l[?25h[?25l[12d[?12l[?25h[?25l[13d[?12l[?25h[?25l[14d[?12l[?25h[?25l[15d[?12l[?25h[?25l[16d[?12l[?25h[?25l[17d[?12l[?25h[?25l[18d[?12l[?25h[?25l[19d[?12l[?25h[?25l[20d[?12l[?25h[?25l[21d[?12l[?25h[?25l[22d[?12l[?25h[?25l[23d[?12l[?25h[?25l[24d[?12l[?25h[?25l[25d[?12l[?25h[?25l[26d[?12l[?25h[?25l[27d[?12l[?25h[?25l[42d[K[28d[?12l[?25h[?25l[29d[?12l[?25h[?25l[30d[?12l[?25h[?25l[31d[?12l[?25h[?25l[32d[?12l[?25h[?25l[33d[?12l[?25h[?25l[34d[?12l[?25h[?25l[35d[?12l[?25h[?25l[36d[?12l[?25h[?25l[37d[?12l[?25h[?25l[38d[?12l[?25h[?25l[39d[?12l[?25h[?25l[40d[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[41d[?12l[?25h[?25lrule plo[?12l[?25h[?25lt_quals[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;16H:[41;5Hi[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;6Hnput:[41d"[?12l[?25h[?25lcalls/a[?12l[?25h[?25lll.vcf"[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Hout[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;8Hput:[41;3H[?12l[?25h[?25l[9G"plots/qu[?12l[?25h[?25lals.svg"[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Hsc[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;7Hript:[41d [?12l[?25h[?25l[9G"[?12l[?25h[?25lscripts/plot-qu[?12l[?25h[?25lals.py"[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 46 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ cat Snakefile
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-
-rule samtools_sort:
-    input:
-        "mapped_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam"
-    shell:
-        "samtools sort -T sorted_reads/{wildcards.sample} "
-        "-O bam {input} > {output}"
-
-rule samtools_index:
-    input:
-        "sorted_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam.bai"
-    shell:
-        "samtools index {input}"
-
-SAMPLES = ["A", "B"]
-
-rule bcftools_call:
-    input:
-        fa="data/genome.fa",
-        bam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),
-        bai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES)
-    output:
-        "calls/all.vcf"
-    shell:
-        "bcftools mpileup -f {input.fa} {input.bam} | "
-        "bcftools call -mv - > {output}"
-
-rule plot_quals:
-    input:
-        "calls/all.vcf"
-    output:
-        "plots/quals.svg"
-    script:
-        "scripts/plot-quals.py"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ touch scripts/plot-quals.py
-touch: cannot touch 'scripts/plot-quals.py': No such file or directory
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ mkdir scripts
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ mkdir scriptstouch scripts/plot-quals.py
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano touch scripts/plot-quals.py[C[1P[1P[1P[1P[1P scripts/plot-quals.pyn scripts/plot-quals.pya scripts/plot-quals.pyn scripts/plot-quals.pyo scripts/plot-quals.py
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;77H(B[0;7m[ Read 0 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                             scripts/plot-quals.py                                                                        [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[m[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2d(B[0;1m[36mimport[39m(B[m m[?12l[?25h[?25latplotli[?12l[?25h[?25lb[3dmatplo[?12l[?25h[?25ltlib.use[42d[K[3;15H[?12l[?25h[?25l("Agg[?12l[?25h[?25l(B[0;1m[32m"Agg"[39m(B[m)[4d(B[0;1m[36mimport[39m(B[m matp[?12l[?25h[?25llotlib.p[?12l[?25h[?25lyplot (B[0;1m[36mas[39m(B[m[?12l[?25h[?25l plt[5dfro[?12l[?25h[?25l(B[0;1m[36mfrom[39m(B[m pysam[42m [49m(B[m[?12l[?25h[?25l (B[0;1m[36mimport[39m(B[m V[?12l[?25h[?25lariantFile[7dqu[?12l[?25h[?25lals = [record.qu[?12l[?25h[?25lal (B[0;1m[36mfor[39m(B[m r[?12l[?25h[?25lecord (B[0;1m[36min[39m(B[m[?12l[?25h[?25l Varian[?12l[?25h[?25ltFile([?12l[?25h[?25lsnakemak[?12l[?25h[?25le.input[[?12l[?25h[?25l0])][8dpl[?12l[?25h[?25lt.hist(quals)[9d[?12l[?25h[?25l[10dplt.sav[?12l[?25h[?25lefig(sn[?12l[?25h[?25lakemake.output[0[?12l[?25h[?25l])[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: scripts/plot-quals.py(B[m[42;42H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 9 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano scripts/plot-quals.py[1@touch[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[14Pmkdir scriptstouch scripts/plot-quals.py[14Pcat Snakefile[1@nano[C[C[C[C[C[C[C[C[C[C
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 46 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mrule bwa_map:[3;5Hinput:[4d"data/genome.fa",[5;9H"data/samples/{sample}.fastq"[6;5Houtput:[7;9H"mapped_reads/{sample}.bam"[8;5Hshell:[9d"bwa mem {input} | samtools view -Sb - > {output}"[11drule samtools_sort:[12;5Hinput:[13d"mapped_reads/{sample}.bam"[14;5Houtput:[15;9H"sorted_reads/{sample}.bam"[16;5Hshell:[17d"samtools sort -T sorted_reads/{wildcards.sample} "[18;9H"-O bam {input} > {output}"[20drule samtools_index:[21;5Hinput:[22d"sorted_reads/{sample}.bam"[23;5Houtput:[24;9H"sorted_reads/{sample}.bam.bai"[25;5Hshell:[26d"samtools index {input}"[28dSAMPLES = ["A", "B"][30drule bcftools_call:[31;5Hinput:[32dfa="data/genome.fa",[33;9Hbam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),[34;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES)[35;5Houtput:[36;9H"calls/all.vcf"[37;5Hshell:[38d"bcftools mpileup -f {input.fa} {input.bam} | "[39;9H"bcftools call -mv - > {output}"[41drule plot_quals:[2d[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2drule allrule bwa_map:[2;9H[?12l[?25h[?25l7[3;41r8[3d[2T[1;44r[2;9H:[K[3;5Hinput:[4d rule bwa_map: [?12l[?25h[?25l[8G[1K "rule bwa_map:[42d[K[4;10H[?12l[?25h[?25lplots/qrule bwa_map:[4;17H[?12l[?25h[?25luals.svgrule bwa_map:[4;25H[?12l[?25h[?25l"rule bwa_map:[4;26H[?12l[?25h[?25l[3;11H[?12l[?25h[?25l[4;26H[?12l[?25h[?25l7[5;41r8[5dM[1;44r[4;26H[K[5drule bwa_map:[?12l[?25h[?25lSrule bwa_map:S[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25lSrule all:S[?12l[?25h[?25larule all:Sa[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lSAMPLES =rule all:[2;10H[?12l[?25h[?25l ["A"rule all:[2;15H[?12l[?25h[?25l", "B"rule all:[2;20H[?12l[?25h[?25l]rule all:[2;21H[?12l[?25h[?25l7[3;41r8[3dM[1;44r[2;21H[K[3drule all:[?12l[?25h[?25l[3;42r[42;1H
-[1;44r[2;21Hrule all:[41;9H"bcftools mpileup -f {input.fa} {input.bam} | "[2;21H[?12l[?25h[?25l7[3;41r8[3dM[1;44r[2;21H[K[3drule all:[?12l[?25h[?25l[4d[?12l[?25h[?25l[5d[?12l[?25h[?25l[6d[?12l[?25h[?25l[6;42r[42;1H
-[1;44r[5;26HSrule bwa_map:[41;9H"bcftools mpileup -f {input.fa} {input.bam} | "[5;26H[?12l[?25h[?25l7[6;41r8[6dM[1;44r[5;26H[K[6dSrule bwa_map:[?12l[?25h[?25l[1P[?12l[?25h[?25l[7d[?12l[?25h[?25l[8d[?12l[?25h[?25l[9d[?12l[?25h[?25l[10d[?12l[?25h[?25l[11d[?12l[?25h[?25l[12d[?12l[?25h[?25l[13d[?12l[?25h[?25l[14d[?12l[?25h[?25l[15d[?12l[?25h[?25l[16d[?12l[?25h[?25l[17d[?12l[?25h[?25l[18d[?12l[?25h[?25l[19d[?12l[?25h[?25l[20d[?12l[?25h[?25l[21d[?12l[?25h[?25l[22d[?12l[?25h[?25l[23d[?12l[?25h[?25l[24d[?12l[?25h[?25l[25d[?12l[?25h[?25l[26d[?12l[?25h[?25l[27d[?12l[?25h[?25l[28d[?12l[?25h[?25l[29d[?12l[?25h[?25l[30d[?12l[?25h[?25l[31d[?12l[?25h[?25l[32d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l(B[0;1m[32m["A", "B"][39m(B[m[K[?12l[?25h[?25l"A", "B"][K[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l "B"][K[?12l[?25h[?25l"B"][K[?12l[?25h[?25lB"][K[?12l[?25h[?25l"][K[?12l[?25h[?25l][K[?12l[?25h[?25l[K[?12l[?25h[?25l[31;42r[42;1H
-[1;44r[41;9H"bcftools mpileup -f {input.fa} {input.bam} | "[32d[?12l[?25h[?25l[31;42r[42;1H
-[1;44r[41;9H"bcftools call -mv - > {output}"[32d[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 48 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -n
-[33mBuilding DAG of jobs...[0m
-[33mJob stats:
-job               count    min threads    max threads
---------------  -------  -------------  -------------
-all                   1              1              1
-bcftools_call         1              1              1
-bwa_map               1              1              1
-plot_quals            1              1              1
-samtools_index        2              1              1
-samtools_sort         2              1              1
-total                 8              1              1
-[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/A.fastq
-    output: mapped_reads/A.bam
-    jobid: 4
-    reason: Updated input files: data/samples/A.fastq
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/B.bam
-    output: sorted_reads/B.bam
-    jobid: 5
-    reason: Missing output files: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/A.bam
-    output: sorted_reads/A.bam
-    jobid: 3
-    reason: Missing output files: sorted_reads/A.bam; Input files updated by another job: mapped_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule samtools_index:
-    input: sorted_reads/B.bam
-    output: sorted_reads/B.bam.bai
-    jobid: 8
-    reason: Missing output files: sorted_reads/B.bam.bai; Input files updated by another job: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule samtools_index:
-    input: sorted_reads/A.bam
-    output: sorted_reads/A.bam.bai
-    jobid: 7
-    reason: Missing output files: sorted_reads/A.bam.bai; Input files updated by another job: sorted_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule bcftools_call:
-    input: data/genome.fa, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/A.bam.bai, sorted_reads/B.bam.bai
-    output: calls/all.vcf
-    jobid: 2
-    reason: Missing output files: calls/all.vcf; Input files updated by another job: sorted_reads/B.bam.bai, sorted_reads/A.bam.bai, sorted_reads/B.bam, sorted_reads/A.bam
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mrule plot_quals:
-    input: calls/all.vcf
-    output: plots/quals.svg
-    jobid: 1
-    reason: Missing output files: plots/quals.svg; Input files updated by another job: calls/all.vcf
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:43:53 2023][0m
-[32mlocalrule all:
-    input: plots/quals.svg
-    jobid: 0
-    reason: Input files updated by another job: plots/quals.svg
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[33mJob stats:
-job               count    min threads    max threads
---------------  -------  -------------  -------------
-all                   1              1              1
-bcftools_call         1              1              1
-bwa_map               1              1              1
-plot_quals            1              1              1
-samtools_index        2              1              1
-samtools_sort         2              1              1
-total                 8              1              1
-[0m
-[33mReasons:
-    (check individual jobs above for details)
-    input files updated by another job:
-        all, bcftools_call, plot_quals, samtools_index, samtools_sort
-    missing output files:
-        bcftools_call, plot_quals, samtools_index, samtools_sort
-    updated input files:
-        bwa_map[0m
-[33m[0m
-[33mThis was a dry-run (flag -n). The order of jobs does not reflect the order of execution.[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -nnano Snakefile
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 48 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mSAMPLES = ["A", "B"][3drule all:[4;5Hinput:[5d"plots/quals.svg"[6drule bwa_map:[7;5Hinput:[8d"data/genome.fa",[9;9H"data/samples/{sample}.fastq"[10;5Houtput:[11;9H"mapped_reads/{sample}.bam"[12;5Hshell:[13d"bwa mem {input} | samtools view -Sb - > {output}"[15drule samtools_sort:[16;5Hinput:[17d"mapped_reads/{sample}.bam"[18;5Houtput:[19;9H"sorted_reads/{sample}.bam"[20;5Hshell:[21d"samtools sort -T sorted_reads/{wildcards.sample} "[22;9H"-O bam {input} > {output}"[24drule samtools_index:[25;5Hinput:[26d"sorted_reads/{sample}.bam"[27;5Houtput:[28;9H"sorted_reads/{sample}.bam.bai"[29;5Hshell:[30d"samtools index {input}"[32drule bcftools_call:[33;5Hinput:[34dfa="data/genome.fa",[35;9Hbam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),[36;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES)[37;5Houtput:[38;9H"calls/all.vcf"[39;5Hshell:[40d"bcftools mpileup -f {input.fa} {input.bam} | "[41;9H"bcftools call -mv - > {output}"[2d[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2d[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l(B[0;1m[32m["A", "B"][39m(B[m[K[?12l[?25h[?25l"A", "B"][K[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l "B"][K[?12l[?25h[?25l"B"][K[?12l[?25h[?25lB"][K[?12l[?25h[?25l"][K[?12l[?25h[?25l][K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;41r[41;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l all:[K[?12l[?25h[?25lall:[K[42d[K[2d[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;1Hrule plot_quals:[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;5Hinput:[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.svg"[K[?12l[?25h[?25lsvg"[K[?12l[?25h[?25lvg"[K[?12l[?25h[?25lg"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;9H"calls/all.vcf"[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l_map:[K[?12l[?25h[?25lmap:[K[?12l[?25h[?25lap:[K[?12l[?25h[?25lp:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;5Houtput:[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;9H"plots/quals.svg"[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.fa",[K[?12l[?25h[?25lfa",[K[?12l[?25h[?25la",[K[?12l[?25h[?25l",[K[?12l[?25h[?25l,[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;5Hscript:[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lastq"[K[?12l[?25h[?25lstq"[K[?12l[?25h[?25ltq"[K[?12l[?25h[?25lq"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[41;9H"scripts/plot-quals.py"[2d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.bam"[K[?12l[?25h[?25lbam"[K[?12l[?25h[?25lam"[K[?12l[?25h[?25lm"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lhell:[K[?12l[?25h[?25lell:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lput}"[K[?12l[?25h[?25lut}"[K[?12l[?25h[?25lt}"[K[?12l[?25h[?25l}"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lsort:[K[?12l[?25h[?25lort:[K[?12l[?25h[?25lrt:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.bam"[K[?12l[?25h[?25lbam"[K[?12l[?25h[?25lam"[K[?12l[?25h[?25lm"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.bam"[K[?12l[?25h[?25lbam"[K[?12l[?25h[?25lam"[K[?12l[?25h[?25lm"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lhell:[K[?12l[?25h[?25lell:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lle} "[K[?12l[?25h[?25le} "[K[?12l[?25h[?25l} "[K[?12l[?25h[?25l "[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lput}"[K[?12l[?25h[?25lut}"[K[?12l[?25h[?25lt}"[K[?12l[?25h[?25l}"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lndex:[K[?12l[?25h[?25ldex:[K[?12l[?25h[?25lex:[K[?12l[?25h[?25lx:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.bam"[K[?12l[?25h[?25lbam"[K[?12l[?25h[?25lam"[K[?12l[?25h[?25lm"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.bai"[K[?12l[?25h[?25lbai"[K[?12l[?25h[?25lai"[K[?12l[?25h[?25li"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lhell:[K[?12l[?25h[?25lell:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lput}"[K[?12l[?25h[?25lut}"[K[?12l[?25h[?25lt}"[K[?12l[?25h[?25l}"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lcall:[K[?12l[?25h[?25lall:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.fa",[K[?12l[?25h[?25lfa",[K[?12l[?25h[?25la",[K[?12l[?25h[?25l",[K[?12l[?25h[?25l,[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lLES),[K[?12l[?25h[?25lES),[K[?12l[?25h[?25lS),[K[?12l[?25h[?25l),[K[?12l[?25h[?25l,[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lPLES)[K[?12l[?25h[?25lLES)[K[?12l[?25h[?25lES)[K[?12l[?25h[?25lS)[K[?12l[?25h[?25l)[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.vcf"[K[?12l[?25h[?25lvcf"[K[?12l[?25h[?25lcf"[K[?12l[?25h[?25lf"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lhell:[K[?12l[?25h[?25lell:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l} | "[K[?12l[?25h[?25l | "[K[?12l[?25h[?25l| "[K[?12l[?25h[?25l "[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lput}"[K[?12l[?25h[?25lut}"[K[?12l[?25h[?25lt}"[K[?12l[?25h[?25l}"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25luals:[K[?12l[?25h[?25lals:[K[?12l[?25h[?25lls:[K[?12l[?25h[?25ls:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.vcf"[K[?12l[?25h[?25lvcf"[K[?12l[?25h[?25lcf"[K[?12l[?25h[?25lf"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.svg"[K[?12l[?25h[?25lsvg"[K[?12l[?25h[?25lvg"[K[?12l[?25h[?25lg"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lript:[K[?12l[?25h[?25lipt:[K[?12l[?25h[?25lpt:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[2;42r[42;1H
-[1;44r[2;1H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ls.py"[K[?12l[?25h[?25l.py"[K[?12l[?25h[?25lpy"[K[?12l[?25h[?25ly"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25lSAMP[?12l[?25h[?25lLES =[?12l[?25h[?25l ["A"[?12l[?25h[?25l, "B"[?12l[?25h[?25l][5drule[?12l[?25h[?25l all:[6d [?12l[?25h[?25l   input[?12l[?25h[?25l:[7;6H[?12l[?25h[?25l   "plo[?12l[?25h[?25lts/quals[?12l[?25h[?25l.svg"[9d[?12l[?25h[?25l[10drule bw[?12l[?25h[?25la_map:[?12l[?25h[?25l[11;5Hinp[?12l[?25h[?25lut:[12;4H[?12l[?25h[?25l[9G"d[?12l[?25h[?25lata/geno[?12l[?25h[?25lme.fa",[?12l[?25h[?25l[13;8H[?12l[?25h[?25l "data/[?12l[?25h[?25lsamples/[?12l[?25h[?25l{sample[?12l[?25h[?25l}.fastq[?12l[?25h[?25l"[14;5Ho[?12l[?25h[?25lutput:[15d[?12l[?25h[?25l[15;9H[?12l[?25h[?25l"mapped[?12l[?25h[?25l_reads/[?12l[?25h[?25l{sample[?12l[?25h[?25l}.bam"[?12l[?25h[?25l[16;5Hshe[?12l[?25h[?25lll:[17d"b[?12l[?25h[?25lwa mem {[?12l[?25h[?25linput}[?12l[?25h[?25l | samt[?12l[?25h[?25lools vie[?12l[?25h[?25lw -Sb -[?12l[?25h[?25l > {ou[?12l[?25h[?25ltput}"[?12l[?25h[?25l[20drule [?12l[?25h[?25lsamtools_sort:[21;5Hinp[?12l[?25h[?25lut:[22d"m[?12l[?25h[?25lapped_reads/{sample}.bam"[23;5Houtput:[24;9H"sorted_reads/{sample}.bam"[25;5Hshell:[26d"samtools sort [?12l[?25h[?25l[2;42r[42;1H
-[1;44r[25;24H-T sorted_reads/{wildcards.sample} "[26;9H"-O bam {input} > {output}"[29drule samtools_index:[30;5Hinput:[31d"sorted_reads/{sample}.bam"[32;5Houtput:[33;9H"sorted_reads/{sample}.bam.bai"[34;5Hshell:[35d"samtools index {input}"[38drule bcftools_call:[39;5Hinput:[40dfa="data/genome.fa",[41;7H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;9Hbam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),[41;9Hbai=expand("sorted_reads/{sample}.[?12l[?25h[?25l7[2;42r8[42d[9S[1;44r[32;43Hbam.bai", sample=SAMPLES)[33;5Houtput:[34;9H"calls/all.vcf"[35;5Hshell:[36d"bcftools mpileup -f {input.fa} {input.bam} | "[37;9H"bcftools call -mv - > {output}"[40drule plot_quals:[41;5Hinpu[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;9Ht:[41;5H[?12l[?25h[?25l    "ca[?12l[?25h[?25llls/all.[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;20Hvcf"[41;3H[?12l[?25h[?25l  output[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;11H:[41;6H[?12l[?25h[?25l   "plo[?12l[?25h[?25lts/quals[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;21H.svg"[41d [?12l[?25h[?25l7[2;42r8[42d
-[1;44r[40;5Hscript:[41;5H[?12l[?25h[?25l    "sc[?12l[?25h[?25lripts/pl[?12l[?25h[?25lot-quals.py"[?12l[?25h[?25l[40;12H[?12l[?25h[?25l[39;26H[?12l[?25h[?25l[38;12H[?12l[?25h[?25l[37;24H[?12l[?25h[?25l[36;11H[?12l[?25h[?25l[35;17H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[32;32H[?12l[?25h[?25l[A[?12l[?25h[?25l[30;11H[?12l[?25h[?25l[29;24H[?12l[?25h[?25l[28;12H[?12l[?25h[?25l[27;32H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[24;11H[?12l[?25h[?25l[23;20H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[20;32H[?12l[?25h[?25l[19;11H[?12l[?25h[?25l[18;32H[?12l[?25h[?25l[17;12H[?12l[?25h[?25l[16;32H[?12l[?25h[?25l[15;11H[?12l[?25h[?25l[14;21H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[11;32H[?12l[?25h[?25l[A[?12l[?25h[?25l[9;11H[?12l[?25h[?25l[8;32H[?12l[?25h[?25l[7;12H[?12l[?25h[?25l[6;32H[?12l[?25h[?25l[5;11H[?12l[?25h[?25l[4;20H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l7[2;41r8M[1;44r[2;9H"bwa mem {input} | samtools view -Sb - > {output}"[2;32H[?12l[?25h[?25l7[2;41r8M[1;44r[2;5Hshell:[?12l[?25h[?25l7[2;41r8M[1;44r[2;9H"mapped_reads/{sample}.bam"[?12l[?25h[?25l7[2;41r8M[1;44r[2;5Houtput:[?12l[?25h[?25l7[2;41r8M[1;44r[2;9H"data/samples/{sample}.fastq"[32G[?12l[?25h[?25l7[2;41r8M[1;44r[2;9H"data/genome.fa",[?12l[?25h[?25l7[2;41r8M[1;44r[2;5Hinput:[?12l[?25h[?25l7[2;42r8M[1;44r[2;1Hrule bwa_map:[?12l[?25h[?25l7[2;42r8M[1;44r[2;1H[?12l[?25h[?25l7[2;41r8M[1;44r[2;1H[?12l[?25h[?25l7[2;41r8M[1;44r[2;9H"plots/quals.svg"[?12l[?25h[?25l7[2;41r8M[1;44r[2;5Hinput:[?12l[?25h[?25l7[2;41r8M[1;44r[2;1Hrule all:[?12l[?25h[?25l7[2;41r8M[1;44r[2;1H[?12l[?25h[?25l7[2;41r8M[1;44r[2;1H[?12l[?25h[?25l7[2;41r8M[1;44r[2;1HSAMPLES = ["A", "B"][?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 56 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefile[2Psnakemake -n
-[33mBuilding DAG of jobs...[0m
-[33mJob stats:
-job               count    min threads    max threads
---------------  -------  -------------  -------------
-all                   1              1              1
-bcftools_call         1              1              1
-bwa_map               1              1              1
-plot_quals            1              1              1
-samtools_index        2              1              1
-samtools_sort         2              1              1
-total                 8              1              1
-[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/A.fastq
-    output: mapped_reads/A.bam
-    jobid: 4
-    reason: Updated input files: data/samples/A.fastq
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/B.bam
-    output: sorted_reads/B.bam
-    jobid: 5
-    reason: Missing output files: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/A.bam
-    output: sorted_reads/A.bam
-    jobid: 3
-    reason: Missing output files: sorted_reads/A.bam; Input files updated by another job: mapped_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule samtools_index:
-    input: sorted_reads/B.bam
-    output: sorted_reads/B.bam.bai
-    jobid: 8
-    reason: Missing output files: sorted_reads/B.bam.bai; Input files updated by another job: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule samtools_index:
-    input: sorted_reads/A.bam
-    output: sorted_reads/A.bam.bai
-    jobid: 7
-    reason: Missing output files: sorted_reads/A.bam.bai; Input files updated by another job: sorted_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule bcftools_call:
-    input: data/genome.fa, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/A.bam.bai, sorted_reads/B.bam.bai
-    output: calls/all.vcf
-    jobid: 2
-    reason: Missing output files: calls/all.vcf; Input files updated by another job: sorted_reads/A.bam.bai, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/B.bam.bai
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mrule plot_quals:
-    input: calls/all.vcf
-    output: plots/quals.svg
-    jobid: 1
-    reason: Missing output files: plots/quals.svg; Input files updated by another job: calls/all.vcf
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:49:33 2023][0m
-[32mlocalrule all:
-    input: plots/quals.svg
-    jobid: 0
-    reason: Input files updated by another job: plots/quals.svg
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[33mJob stats:
-job               count    min threads    max threads
---------------  -------  -------------  -------------
-all                   1              1              1
-bcftools_call         1              1              1
-bwa_map               1              1              1
-plot_quals            1              1              1
-samtools_index        2              1              1
-samtools_sort         2              1              1
-total                 8              1              1
-[0m
-[33mReasons:
-    (check individual jobs above for details)
-    input files updated by another job:
-        all, bcftools_call, plot_quals, samtools_index, samtools_sort
-    missing output files:
-        bcftools_call, plot_quals, samtools_index, samtools_sort
-    updated input files:
-        bwa_map[0m
-[33m[0m
-[33mThis was a dry-run (flag -n). The order of jobs does not reflect the order of execution.[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --help--forcerunsamtools_sort plot_quals[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1P[1P[1P[1P[1P[1P plot_quals[1P[1P[1P[1P plot_quals[C[1P[1P[1P[1P[1P[1P[1@ [1P
-Error: you need to specify the maximum number of CPU cores to be used at the same time. If you want to use N cores, say --cores N or -cN. For all cores on your system (be sure that this is appropriate) use --cores all. For no parallelization use --cores 1 or -c1. <_io.TextIOWrapper name='<stderr>' mode='w' encoding='utf-8'>
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --forcerun plot_quals[C[C[C[1@-[C[C[1@-[1@c[1@o[1@r[1@e[1@s[1@ [1@1[1@ 
-[33mBuilding DAG of jobs...[0m
-[33mUsing shell: /usr/bin/bash[0m
-[33mProvided cores: 1 (use --cores to define parallelism)[0m
-[33mRules claiming more threads will be scaled down.[0m
-[33mJob stats:
-job               count    min threads    max threads
---------------  -------  -------------  -------------
-all                   1              1              1
-bcftools_call         1              1              1
-bwa_map               1              1              1
-plot_quals            1              1              1
-samtools_index        2              1              1
-samtools_sort         2              1              1
-total                 8              1              1
-[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:03 2023][0m
-[32mrule bwa_map:
-    input: data/genome.fa, data/samples/A.fastq
-    output: mapped_reads/A.bam
-    jobid: 4
-    reason: Updated input files: data/samples/A.fastq
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[M::bwa_idx_load_from_disk] read 0 ALT contigs
-[M::process] read 25000 sequences (2525000 bp)...
-[M::mem_process_seqs] Processed 25000 reads in 2.049 CPU sec, 2.060 real sec
-[main] Version: 0.7.17-r1188
-[main] CMD: bwa mem data/genome.fa data/samples/A.fastq
-[main] Real time: 2.672 sec; CPU: 2.451 sec
-[32m[Wed Apr 12 18:54:06 2023][0m
-[32mFinished job 4.[0m
-[32m1 of 8 steps (12%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:06 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/A.bam
-    output: sorted_reads/A.bam
-    jobid: 3
-    reason: Missing output files: sorted_reads/A.bam; Input files updated by another job: mapped_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:06 2023][0m
-[32mFinished job 3.[0m
-[32m2 of 8 steps (25%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:06 2023][0m
-[32mrule samtools_sort:
-    input: mapped_reads/B.bam
-    output: sorted_reads/B.bam
-    jobid: 5
-    reason: Missing output files: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:07 2023][0m
-[32mFinished job 5.[0m
-[32m3 of 8 steps (38%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:07 2023][0m
-[32mrule samtools_index:
-    input: sorted_reads/A.bam
-    output: sorted_reads/A.bam.bai
-    jobid: 7
-    reason: Missing output files: sorted_reads/A.bam.bai; Input files updated by another job: sorted_reads/A.bam
-    wildcards: sample=A
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:07 2023][0m
-[32mFinished job 7.[0m
-[32m4 of 8 steps (50%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:07 2023][0m
-[32mrule samtools_index:
-    input: sorted_reads/B.bam
-    output: sorted_reads/B.bam.bai
-    jobid: 8
-    reason: Missing output files: sorted_reads/B.bam.bai; Input files updated by another job: sorted_reads/B.bam
-    wildcards: sample=B
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:07 2023][0m
-[32mFinished job 8.[0m
-[32m5 of 8 steps (62%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:07 2023][0m
-[32mrule bcftools_call:
-    input: data/genome.fa, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/A.bam.bai, sorted_reads/B.bam.bai
-    output: calls/all.vcf
-    jobid: 2
-    reason: Missing output files: calls/all.vcf; Input files updated by another job: sorted_reads/A.bam.bai, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/B.bam.bai
-    resources: tmpdir=/tmp[0m
-[32m[0m
-Note: none of --samples-file, --ploidy or --ploidy-file given, assuming all sites are diploid
-[mpileup] 2 samples in 2 input files
-[mpileup] maximum number of reads per input file set to -d 250
-[32m[Wed Apr 12 18:54:08 2023][0m
-[32mFinished job 2.[0m
-[32m6 of 8 steps (75%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:08 2023][0m
-[32mrule plot_quals:
-    input: calls/all.vcf
-    output: plots/quals.svg
-    jobid: 1
-    reason: Missing output files: plots/quals.svg; Input files updated by another job: calls/all.vcf
-    resources: tmpdir=/tmp[0m
-[32m[0m
-Matplotlib is building the font cache; this may take a moment.
-[32m[Wed Apr 12 18:54:23 2023][0m
-[32mFinished job 1.[0m
-[32m7 of 8 steps (88%) done[0m
-[33mSelect jobs to execute...[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:23 2023][0m
-[32mlocalrule all:
-    input: plots/quals.svg
-    jobid: 0
-    reason: Input files updated by another job: plots/quals.svg
-    resources: tmpdir=/tmp[0m
-[32m[0m
-[32m[Wed Apr 12 18:54:23 2023][0m
-[32mFinished job 0.[0m
-[32m8 of 8 steps (100%) done[0m
-[33mComplete log: .snakemake/log/2023-04-12T185402.715124.snakemake.log[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake --cores 1 --forcerun plot_quals[10P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn[Knano Snakefile
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 56 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mSAMPLES = ["A", "B"][5drule all:[6;5Hinput:[7d"plots/quals.svg"[10drule bwa_map:[11;5Hinput:[12d"data/genome.fa",[13;9H"data/samples/{sample}.fastq"[14;5Houtput:[15;9H"mapped_reads/{sample}.bam"[16;5Hshell:[17d"bwa mem {input} | samtools view -Sb - > {output}"[20drule samtools_sort:[21;5Hinput:[22d"mapped_reads/{sample}.bam"[23;5Houtput:[24;9H"sorted_reads/{sample}.bam"[25;5Hshell:[26d"samtools sort -T sorted_reads/{wildcards.sample} "[27;9H"-O bam {input} > {output}"[30drule samtools_index:[31;5Hinput:[32d"sorted_reads/{sample}.bam"[33;5Houtput:[34;9H"sorted_reads/{sample}.bam.bai"[35;5Hshell:[36d"samtools index {input}"[39drule bcftools_call:[40;5Hinput:[41dfa="data/genome.fa",[2d[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2dconfigfiSAMPLES = ["A", "B"][2;9H[?12l[?25h[?25lle: "cSAMPLES = ["A", "B"][2;15H[?12l[?25h[?25lonfig.yaSAMPLES = ["A", "B"][2;23H[?12l[?25h[?25lml"SAMPLES = ["A", "B"][2;26H[?12l[?25h[?25l7[3;41r8[3dM[1;44r[2;26H[K[3dSAMPLES = ["A", "B"][42d[K[3d[?12l[?25h[?25lsamples:SAMPLES = ["A", "B"][3;9H[?12l[?25h[?25l7[3;41r8M[1;44r[3;1Hsamples:[4d    A[3P[?12l[?25h[?25l: data/samples/SAMPLES = ["A", "B"][4;21H[?12l[?25h[?25lA.fastqSAMPLES = ["A", "B"][4;28H[?12l[?25h[?25l7[5;41r8[5dM[1;44r[4;28H[K[5;5HB:SAMPLES = ["A", "B"][7G[?12l[?25h[?25l data/samples/BSAMPLES = ["A", "B"][5;22H[?12l[?25h[?25l.fastqSAMPLES = ["A", "B"][5;28H[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l "B"][K[28G[?12l[?25h[?25l"B"][K[?12l[?25h[?25lB"][K[?12l[?25h[?25l"][K[?12l[?25h[?25l][K[?12l[?25h[?25l [?12l[?25h[?25l[6d[?12l[?25h[?25l[7d[?12l[?25h[?25l[8;10H[?12l[?25h[?25l[9d:[?12l[?25h[?25l[10;26H[?12l[?25h[?25l[11d[?12l[?25h[?25l[12d[?12l[?25h[?25l[13;14H[?12l[?25h[?25l[14;11H[?12l[?25h[?25l[15;26H[?12l[?25h[?25l[16dmp[?12l[?25h[?25l[17;12H[?12l[?25h[?25l[18;28H[?12l[?25h[?25l[19;11H[?12l[?25h[?25l[20;28H[?12l[?25h[?25l[21d[?12l[?25h[?25l[22d[?12l[?25h[?25l[23;20H[?12l[?25h[?25l[24;11H[?12l[?25h[?25l[25;28H[?12l[?25h[?25l[26;12H[?12l[?25h[?25l[27;28H[?12l[?25h[?25l[28;11H[?12l[?25h[?25l[29;28H[?12l[?25h[?25l[30d[?12l[?25h[?25l[31d[?12l[?25h[?25l[32d[?12l[?25h[?25l[33;21H[?12l[?25h[?25l[34;11H[?12l[?25h[?25l[35;28H[?12l[?25h[?25l[36;12H[?12l[?25h[?25l[37;28H[?12l[?25h[?25l[38;11H[?12l[?25h[?25l[39;28H[?12l[?25h[?25l[40d[?12l[?25h[?25l[41d[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;1Hrule bcftools_call:[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Hinput:[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9Hfa="data/genome.fa",[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9Hbam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),[41;28H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES)[41;28H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Houtput:[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9H"calls/all.vcf"[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Hshell:[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9H"bcftools mpileup -f {input.fa} {input.bam} | "[41;28H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9H"bcftools call -mv - > {output}"[41;28H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;1H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;1H[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;1Hrule plot_quals:[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Hinput:[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;9H"calls/all.vcf"[?12l[?25h[?25l7[2;42r8[42d
-[1;44r[41;5Houtput:[?12l[?25h[?25l[40;24H[?12l[?25h[?25l[39;11H[?12l[?25h[?25l[38;17H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[35;28H[?12l[?25h[?25l[A[?12l[?25h[?25l[33;11H[?12l[?25h[?25l[32;24H[?12l[?25h[?25l[31;12H[?12l[?25h[?25l[30;28H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[27;11H[?12l[?25h[?25l[26;20H[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25lrule bcf[?12l[?25h[?25ltools_c[?12l[?25h[?25l7[25;41r8[25dM[1;44r[24;16Hall:[25;5Hinput:[?12l[?25h[?25l7[26;41r8[26dM[1;44r[26;9Hfa="data/genome.fa",[?12l[?25h[?25l7[27;41r8[27dM[1;44r[27;9Hbam=expand("s[?12l[?25h[?25lorted_reads/{sample}.bam", s[?12l[?25h[?25lample=co[?12l[?25h[?25lnfig["samples"[?12l[?25h[?25l7[28;41r8[28dM[1;44r[27;72H]),[28;4H[?12l[?25h[?25l[9Gbai=expand("sorted_reads[?12l[?25h[?25l/{sampl[?12l[?25h[?25le}.bam.[?12l[?25h[?25lbai", s[?12l[?25h[?25lample=co[?12l[?25h[?25lnfig["s[?12l[?25h[?25l7[29;42r8[29dM[1;44r[28;69Hamples"])[29;5Houtput:[?12l[?25h[?25l7[30;42r8[30dM[1;44r[30;8H[?12l[?25h[?25l "calls/all.vcf[?12l[?25h[?25l7[31;41r8[31d[2T[1;44r[30;23H"[31;5Hshell:[32d"[?12l[?25h[?25lbcftools mpileup -f {input.fa}[?12l[?25h[?25l {inpu[?12l[?25h[?25lt.bam} [?12l[?25h[?25l7[33;41r8[33dM[1;44r[32;53H| "[33;3H[?12l[?25h[?25l[9G"bcftools[?12l[?25h[?25l call -mv - > {[?12l[?25h[?25loutput}[?12l[?25h[?25l"[?12l[?25h[?25l[A[?12l[?25h[?25l[31;11H[?12l[?25h[?25l[30;24H[?12l[?25h[?25l[29;12H[?12l[?25h[?25l[28;41H[?12l[?25h[?25l[A[?12l[?25h[?25l[26;29H[?12l[?25h[?25l[25;11H[?12l[?25h[?25l[24;20H[?12l[?25h[?25l[23;33H[?12l[?25h[?25l[22;11H[?12l[?25h[?25l[21;40H[?12l[?25h[?25l[20;12H[?12l[?25h[?25l[21;40H[?12l[?25h[?25l[22;11H[?12l[?25h[?25l[23;33H[?12l[?25h[?25l7[24;41r8[24dM[1;44r[24;1H[?12l[?25h[?25l[25d[?12l[?25h[?25l[26d[?12l[?25h[?25l[27d[?12l[?25h[?25l[28d[?12l[?25h[?25l[29d[?12l[?25h[?25l[30d[?12l[?25h[?25l[31d[?12l[?25h[?25l[32d[?12l[?25h[?25l[33d[?12l[?25h[?25l[34d[?12l[?25h[?25l[35d[?12l[?25h[?25l[36d[?12l[?25h[?25l[37d[?12l[?25h[?25l[A[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lcall:[K[?12l[?25h[?25lall:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;9H"calls/all.vcf"[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lnput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;5Hshell:[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.fa",[K[?12l[?25h[?25lfa",[K[?12l[?25h[?25la",[K[?12l[?25h[?25l",[K[?12l[?25h[?25l,[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;9H"bcftools mpileup -f {input.fa} {input.bam} | "[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lLES),[K[?12l[?25h[?25lES),[K[?12l[?25h[?25lS),[K[?12l[?25h[?25l),[K[?12l[?25h[?25l,[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;9H"bcftools call -mv - > {output}"[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lPLES)[K[?12l[?25h[?25lLES)[K[?12l[?25h[?25lES)[K[?12l[?25h[?25lS)[K[?12l[?25h[?25l)[K[?12l[?25h[?25l[K[?12l[?25h[?25l    output:[37;5H    "calls/all.vcf"[38;5Hshell:[K[39;5H    "bcftools mpileup -f {input.fa} {input.bam} | "[40;19Hcall -mv - > {output}"[K[41d[K[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25ltput:[K[?12l[?25h[?25lput:[K[?12l[?25h[?25lut:[K[?12l[?25h[?25lt:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[36;9H"calls/all.vcf"[37;5Hshell:[K[38;5H    "bcftools mpileup -f {input.fa} {input.bam} | "[39;19Hcall -mv - > {output}"[K[40d[K[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l.vcf"[K[?12l[?25h[?25lvcf"[K[?12l[?25h[?25lcf"[K[?12l[?25h[?25lf"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l    shell:[37;5H    "bcftools mpileup -f {input.fa} {input.bam} | "[38;19Hcall -mv - > {output}"[K[39d[K[41drule plot_quals:[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lhell:[K[?12l[?25h[?25lell:[K[?12l[?25h[?25lll:[K[?12l[?25h[?25ll:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;5Hinput:[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l} | "[K[?12l[?25h[?25l | "[K[?12l[?25h[?25l| "[K[?12l[?25h[?25l "[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;9H"calls/all.vcf"[36d[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lput}"[K[?12l[?25h[?25lut}"[K[?12l[?25h[?25lt}"[K[?12l[?25h[?25l}"[K[?12l[?25h[?25l"[K[?12l[?25h[?25l[K[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;5Houtput:[36d[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;9H"plots/quals.svg"[36d[?12l[?25h[?25l[35;42r[42;1H
-[1;44r[41;5Hscript:[36d[?12l[?25h[?25l[42;56H(B[0;7m[ line 51/58 (87%), col 1/17 (5%), char 1098/1232 (89%) ](B[m[36d[?12l[?25h[?25l[42;113H[36d[?12l[?25h[?25l[42;113H[36d[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[A[?12l[?25h[?25l[42;56H (B[0;7m[ line 45/58 (77%), col 1/12 (8%), char 953[107G77%) ](B[m[30d[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 57 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefilesnakemake --cores 1 --forcerun plot_quals[10P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn[Knano Snakefile[2Psnakemake -nnano Snakefilescripts/plot-quals.py[1@touch[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[14Pmkdir scriptstouch scripts/plot-quals.py[14Pcat Snakefile
-configfile: "config.yaml"
-samples:
-    A: data/samples/A.fastq
-    B: data/samples/B.fastq
-
-
-rule all:
-    input:
-        "plots/quals.svg"
-
-
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-
-
-rule samtools_sort:
-    input:
-        "mapped_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam"
-    shell:
-        "samtools sort -T sorted_reads/{wildcards.sample} "
-        "-O bam {input} > {output}"
-
-
-rule samtools_index:
-    input:
-        "sorted_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam.bai"
-    shell:
-        "samtools index {input}"
-
-rule bcftools_call:
-    input:
-        fa="data/genome.fa",
-        bam=expand("sorted_reads/{sample}.bam", sample=config["samples"]),
-        bai=expand("sorted_reads/{sample}.bam.bai", sample=config["samples"])
-    output:
-        "calls/all.vcf"
-    shell:
-        "bcftools mpileup -f {input.fa} {input.bam} | "
-        "bcftools call -mv - > {output}"
-
-rule plot_quals:
-    input:
-        "calls/all.vcf"
-    output:
-        "plots/quals.svg"
-    script:
-        "scripts/plot-quals.py"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -n
-[31mSyntaxError in file /home/ksenia/snakemake-tutorial/Snakefile, line 2:
-invalid syntax[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -n[Knano config.yam1
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;79H(B[0;7m[ New File ](B[m[H(B[0;7m  GNU nano 4.8                                                                  config.yam1                                                                             [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[m[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2dsamples:[?12l[?25h[?25l[3;5HA[?12l[?25h[?25l: data/[?12l[?25h[?25lsamples/[42d[K[3;21H[?12l[?25h[?25lA.fastq[?12l[?25h[?25l[4;5HB:[?12l[?25h[?25l data/samples/B[?12l[?25h[?25l.fastq[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: config.yam1(B[m[42;32H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 3 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano config.yam1[4Psnakemake -ncat Snakefile[1@nano[C[C[C[C[C[C[C[C[C[C
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 57 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mconfigfile: "config.yaml"[3dsamples:[4;5HA: data/samples/A.fastq[5;5HB: data/samples/B.fastq[8drule all:[9;5Hinput:[10d"plots/quals.svg"[13drule bwa_map:[14;5Hinput:[15d"data/genome.fa",[16;9H"data/samples/{sample}.fastq"[17;5Houtput:[18;9H"mapped_reads/{sample}.bam"[19;5Hshell:[20d"bwa mem {input} | samtools view -Sb - > {output}"[23drule samtools_sort:[24;5Hinput:[25d"mapped_reads/{sample}.bam"[26;5Houtput:[27;9H"sorted_reads/{sample}.bam"[28;5Hshell:[29d"samtools sort -T sorted_reads/{wildcards.sample} "[30;9H"-O bam {input} > {output}"[33drule samtools_index:[34;5Hinput:[35d"sorted_reads/{sample}.bam"[36;5Houtput:[37;9H"sorted_reads/{sample}.bam.bai"[38;5Hshell:[39d"samtools index {input}"[41drule bcftools_call:[2d[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2d[1P[?12l[?25h[?25lconfigfile: "config.yaml"c[?12l[?25h[?25l[1P[?12l[?25h[?25lconfigfile: "config.yaml"c[?12l[?25h[?25l[3d[?12l[?25h[?25l[1P[?12l[?25h[?25lples:[Ks[?12l[?25h[?25lles:[Ks[?12l[?25h[?25les:[Ks[?12l[?25h[?25ls:[K[?12l[?25h[?25l:[K[?12l[?25h[?25l [?12l[?25h[?25l[4;41r[41;1H
-[1;44r[3;6HA: data/samples/A.fastq[41;5Hinput:[3ds[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[42d[K[3ds[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1Ps[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lfastq[Ks[?12l[?25h[?25lastq[Ks[?12l[?25h[?25lstq[Ks[?12l[?25h[?25lstq[K[?12l[?25h[?25lq[K[?12l[?25h[?25l [?12l[?25h[?25l[4;42r[42;1H
-[1;44r[3;6HB: data/samples/B.fastq[41;9Hfa="data/genome.fa",[3ds[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1Ps[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1Ps[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25lfastq[Ks[?12l[?25h[?25lastq[Ks[?12l[?25h[?25lstq[Ks[?12l[?25h[?25lstq[K[?12l[?25h[?25lq[K[?12l[?25h[?25l [?12l[?25h[?25l[K[?12l[?25h[?25l[3;42r[42;1H
-[1;44r[41;9Hbam=expand("sorted_reads/{sample}.bam", sample=config["samples"]),[2;26H[?12l[?25h[?25l[3;42r[42;1H
-[1;44r[41;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=config["samples"])[2;26H[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 53 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefileconfig.yam1[4Psnakemake -n
-[31mWorkflowError in file /home/ksenia/snakemake-tutorial/Snakefile, line 1:
-Workflow defines configfile config.yaml but it is not present or accessible (full checked path: /home/ksenia/snakemake-tutorial/config.yaml).
-  File "/home/ksenia/snakemake-tutorial/Snakefile", line 1, in <module>[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ cat Snakefile
-configfile: "config.yaml"
-
-rule all:
-    input:
-        "plots/quals.svg"
-
-
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-
-
-rule samtools_sort:
-    input:
-        "mapped_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam"
-    shell:
-        "samtools sort -T sorted_reads/{wildcards.sample} "
-        "-O bam {input} > {output}"
-
-
-rule samtools_index:
-    input:
-        "sorted_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam.bai"
-    shell:
-        "samtools index {input}"
-
-rule bcftools_call:
-    input:
-        fa="data/genome.fa",
-        bam=expand("sorted_reads/{sample}.bam", sample=config["samples"]),
-        bai=expand("sorted_reads/{sample}.bam.bai", sample=config["samples"])
-    output:
-        "calls/all.vcf"
-    shell:
-        "bcftools mpileup -f {input.fa} {input.bam} | "
-        "bcftools call -mv - > {output}"
-
-rule plot_quals:
-    input:
-        "calls/all.vcf"
-    output:
-        "plots/quals.svg"
-    script:
-        "scripts/plot-quals.py"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ cat Snakefile[1Psnakemake -n
-[31mWorkflowError in file /home/ksenia/snakemake-tutorial/Snakefile, line 1:
-Workflow defines configfile config.yaml but it is not present or accessible (full checked path: /home/ksenia/snakemake-tutorial/config.yaml).
-  File "/home/ksenia/snakemake-tutorial/Snakefile", line 1, in <module>[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -ncat Snakefile[1Psnakemake -nnano Snakefile
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 53 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mconfigfile: "config.yaml"[4drule all:[5;5Hinput:[6d"plots/quals.svg"[9drule bwa_map:[10;5Hinput:[11d"data/genome.fa",[12;9H"data/samples/{sample}.fastq"[13;5Houtput:[14;9H"mapped_reads/{sample}.bam"[15;5Hshell:[16d"bwa mem {input} | samtools view -Sb - > {output}"[19drule samtools_sort:[20;5Hinput:[21d"mapped_reads/{sample}.bam"[22;5Houtput:[23;9H"sorted_reads/{sample}.bam"[24;5Hshell:[25d"samtools sort -T sorted_reads/{wildcards.sample} "[26;9H"-O bam {input} > {output}"[29drule samtools_index:[30;5Hinput:[31d"sorted_reads/{sample}.bam"[32;5Houtput:[33;9H"sorted_reads/{sample}.bam.bai"[34;5Hshell:[35d"samtools index {input}"[37drule bcftools_call:[38;5Hinput:[39dfa="data/genome.fa",[40;9Hbam=expand("sorted_reads/{sample}.bam", sample=config["samples"]),[41;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=config["samples"])[2d[?12l[?25h[?25lc[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25lf[?12l[?25h[?25li[?12l[?25h[?25lg[?12l[?25h[?25lf[?12l[?25h[?25li[?12l[?25h[?25ll[?12l[?25h[?25le[?12l[?25h[?25l:[?12l[?25h[?25l [?12l[?25h[?25l"[?12l[?25h[?25lc[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25lf[?12l[?25h[?25li[?12l[?25h[?25lg[?12l[?25h[?25l.[?12l[?25h[?25ly[?12l[?25h[?25la[?12l[?25h[?25lm[?12l[?25h[?25ll[?12l[?25h[?25l"[?12l[?25h[?25l[1;159H(B[0;7mModified[42d(B[m[K[1;167H[2;26H"/home/[?12l[?25h[?25lksenia/s[?12l[?25h[?25lnakemake[?12l[?25h[?25l-tutoria[?12l[?25h[?25ll/config[?12l[?25h[?25l.yaml"[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[?12l[?25h[?25l [?12l[?25h[?25l[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 53 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefile[2Psnakemake -n
-[31mWorkflowError in file /home/ksenia/snakemake-tutorial/Snakefile, line 1:
-Workflow defines configfile /home/ksenia/snakemake-tutorial/config.yaml but it is not present or accessible (full checked path: /home/ksenia/snakemake-tutorial/config.yaml).
-  File "/home/ksenia/snakemake-tutorial/Snakefile", line 1, in <module>[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -nnano Snakefile[2Psnakemake -nnano Snakefile[C[1Pe[1Pe[1Pe[K[1Pe[1Pe[1Pe[1Pe[1Pe[1Pe[1Pe[1Pe[1Pe[Kcat configyam1.yam1
-samples:
-    A: data/samples/A.fastq
-    B: data/samples/B.fastq
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ cat config.yam1[3Psnakemake -n
-[31mWorkflowError in file /home/ksenia/snakemake-tutorial/Snakefile, line 1:
-Workflow defines configfile /home/ksenia/snakemake-tutorial/config.yaml but it is not present or accessible (full checked path: /home/ksenia/snakemake-tutorial/config.yaml).
-  File "/home/ksenia/snakemake-tutorial/Snakefile", line 1, in <module>[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -ncat config.yam1[3Psnakemake -nnano Snakefile
-[?2004h[?1049h[22;0;0t[1;44r(B[m[4l[?7h[39;49m[?1h=[?1h=[?25l[39;49m(B[m[H[2J[42;78H(B[0;7m[ Reading... ](B[m[42;76H(B[0;7m[ Read 53 lines ](B[m[H(B[0;7m  GNU nano 4.8                                                                   Snakefile                                                                              [1;167H(B[m[43d(B[0;7m^G(B[m Get Help     (B[0;7m^O(B[m Write Out    (B[0;7m^W(B[m Where Is     (B[0;7m^K(B[m Cut Text     (B[0;7m^J(B[m Justify[81G(B[0;7m^C(B[m Cur Pos[97G(B[0;7mM-U(B[m Undo[43;113H(B[0;7mM-A(B[m Mark Text   (B[0;7mM-](B[m To Bracket  (B[0;7mM-Q(B[m Previous[44d(B[0;7m^X(B[m Exit[44;17H(B[0;7m^R(B[m Read File    (B[0;7m^\(B[m Replace[49G(B[0;7m^U(B[m Paste Text   (B[0;7m^T(B[m To Spell     (B[0;7m^_(B[m Go To Line   (B[0;7mM-E(B[m Redo[44;113H(B[0;7mM-6(B[m Copy Text   (B[0;7m^Q(B[m Where Was    (B[0;7mM-W(B[m Next[42d[2d[39;49m(B[mconfigfile: "/home/ksenia/snakemake-tutorial/config.yaml"[4drule all:[5;5Hinput:[6d"plots/quals.svg"[9drule bwa_map:[10;5Hinput:[11d"data/genome.fa",[12;9H"data/samples/{sample}.fastq"[13;5Houtput:[14;9H"mapped_reads/{sample}.bam"[15;5Hshell:[16d"bwa mem {input} | samtools view -Sb - > {output}"[19drule samtools_sort:[20;5Hinput:[21d"mapped_reads/{sample}.bam"[22;5Houtput:[23;9H"sorted_reads/{sample}.bam"[24;5Hshell:[25d"samtools sort -T sorted_reads/{wildcards.sample} "[26;9H"-O bam {input} > {output}"[29drule samtools_index:[30;5Hinput:[31d"sorted_reads/{sample}.bam"[32;5Houtput:[33;9H"sorted_reads/{sample}.bam.bai"[34;5Hshell:[35d"samtools index {input}"[37drule bcftools_call:[38;5Hinput:[39dfa="data/genome.fa",[40;9Hbam=expand("sorted_reads/{sample}.bam", sample=config["samples"]),[41;9Hbai=expand("sorted_reads/{sample}.bam.bai", sample=config["samples"])[2d[?12l[?25h[?25lc[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25lf[?12l[?25h[?25li[?12l[?25h[?25lg[?12l[?25h[?25lf[?12l[?25h[?25li[?12l[?25h[?25ll[?12l[?25h[?25le[?12l[?25h[?25l:[?12l[?25h[?25l [?12l[?25h[?25l"[?12l[?25h[?25l/[?12l[?25h[?25lh[?12l[?25h[?25lo[?12l[?25h[?25lm[?12l[?25h[?25le[?12l[?25h[?25l/[?12l[?25h[?25lk[?12l[?25h[?25ls[?12l[?25h[?25le[?12l[?25h[?25ln[?12l[?25h[?25li[?12l[?25h[?25la[?12l[?25h[?25l[42d[K[2;27H[?12l[?25h[?25ls[?12l[?25h[?25ln[?12l[?25h[?25la[?12l[?25h[?25lk[?12l[?25h[?25le[?12l[?25h[?25lm[?12l[?25h[?25la[?12l[?25h[?25lk[?12l[?25h[?25le[?12l[?25h[?25l-[?12l[?25h[?25lt[?12l[?25h[?25lu[?12l[?25h[?25lt[?12l[?25h[?25lo[?12l[?25h[?25lr[?12l[?25h[?25li[?12l[?25h[?25la[?12l[?25h[?25ll[?12l[?25h[?25l/[?12l[?25h[?25lc[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25lf[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[1;159H(B[0;7mModified(B[m[2;44H[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l[1P[?12l[?25h[?25l'/config.yaml"[2;14H[?12l[?25h[?25l[1P[?12l[?25h[?25l"/config.yaml"[2;14H[?12l[?25h[?25l[1P[?12l[?25h[?25lc[?12l[?25h[?25lo[?12l[?25h[?25ln[?12l[?25h[?25lf[?12l[?25h[?25li[?12l[?25h[?25lg[?12l[?25h[?25l.[?12l[?25h[?25ly[?12l[?25h[?25la[?12l[?25h[?25lm[?12l[?25h[?25l"[K[?12l[?25h[?25l1"[?12l[?25h[?25l[42d(B[0;7mSave modified buffer?                                                                                                                                                   [43;1H Y(B[m Yes[K[44d(B[0;7m N(B[m No  [44;18H(B[0;7mC(B[m Cancel[K[42;23H[?12l[?25h[?25l[?12l[?25h[?25l[43d(B[0;7m^G(B[m Get Help[43;43H(B[0;7mM-D(B[m DOS Format[43;85H(B[0;7mM-A(B[m Append[43;127H(B[0;7mM-B(B[m Backup File[44d(B[0;7m^C(B[m Cancel[17G         [44;43H(B[0;7mM-M(B[m Mac Format[44;85H(B[0;7mM-P(B[m Prepend[44;127H(B[0;7m^T(B[m To Files[42d(B[0;7mFile Name to Write: Snakefile(B[m[42;30H[?12l[?25h[?25l[42;77H[1K (B[0;7m[ Writing... ](B[m[K[1;159H(B[0;7m        (B[m[42;76H(B[0;7m[ Wrote 53 lines ](B[m[J[44d[?12l[?25h[44;1H[?1049l[23;0;0t[?1l>[?2004l(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ nano Snakefile[2Psnakemake -n
-[33mBuilding DAG of jobs...[0m
-[33mNothing to be done (all requested files are present and up to date).[0m
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ snakemake -nnano Snakefile[2Psnakemake -ncat config.yam1[3Psnakemake -nnano Snakefile[2Psnakemake -ncat Snakefile
-configfile: "config.yam1"
-
-rule all:
-    input:
-        "plots/quals.svg"
-
-
-rule bwa_map:
-    input:
-        "data/genome.fa",
-        "data/samples/{sample}.fastq"
-    output:
-        "mapped_reads/{sample}.bam"
-    shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
-
-
-rule samtools_sort:
-    input:
-        "mapped_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam"
-    shell:
-        "samtools sort -T sorted_reads/{wildcards.sample} "
-        "-O bam {input} > {output}"
-
-
-rule samtools_index:
-    input:
-        "sorted_reads/{sample}.bam"
-    output:
-        "sorted_reads/{sample}.bam.bai"
-    shell:
-        "samtools index {input}"
-
-rule bcftools_call:
-    input:
-        fa="data/genome.fa",
-        bam=expand("sorted_reads/{sample}.bam", sample=config["samples"]),
-        bai=expand("sorted_reads/{sample}.bam.bai", sample=config["samples"])
-    output:
-        "calls/all.vcf"
-    shell:
-        "bcftools mpileup -f {input.fa} {input.bam} | "
-        "bcftools call -mv - > {output}"
-
-rule plot_quals:
-    input:
-        "calls/all.vcf"
-    output:
-        "plots/quals.svg"
-    script:
-        "scripts/plot-quals.py"
-(snakemake-tutorial) ]0;ksenia@DESKTOP-A39D82M: ~/snakemake-tutorial[01;32mksenia@DESKTOP-A39D82M[00m:[01;34m~/snakemake-tutorial[00m$ exit
-exit
-
-Script done on 2023-04-12 19:26:31+03:00 [COMMAND_EXIT_CODE="0"]
